@@ -1,0 +1,3 @@
+import type {milestones} from "@/src/db/schema";
+type Milestone=typeof milestones.$inferSelect;
+export function ReminderPanel({milestones}:{milestones:Milestone[]}){const today=new Date().toISOString().slice(0,10);const overdue=milestones.filter(item=>item.status!=="done"&&item.dueDate<today);return <section className="reminders"><h2>⏰ Reminders</h2><p><strong>Simulated: no message is sent.</strong> These in-app reminders use overdue demo milestones.</p>{overdue.length?<ul>{overdue.map(item=><li key={item.id}><strong>{item.title}</strong> was due {item.dueDate}.</li>)}</ul>:<p>No overdue milestones right now. Nice progress!</p>}</section>}

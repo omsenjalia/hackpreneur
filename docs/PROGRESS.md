@@ -57,8 +57,10 @@
 - Verified milestones move from `self_reported` to `verified`; they are not double-counted. Dashboard contains only synthetic data.
 - Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass. Live test changed a milestone to done, verified it as organizer, confirmed DB claim became `verified`, and confirmed the dashboard rendered both separate counts.
 
-## Phase 9 — Simulated reminders and audit trail: next
-- Next: generated in-app overdue/stale reminders, visible simulation label, and organizer audit entries for consent, visibility, verification, and match status.
+## Phase 9 — Simulated reminders and audit trail: complete
+- Milestone tracker automatically surfaces overdue unfinished milestones in an in-app panel labelled “Simulated: no message is sent.” Seed data includes a safely synthetic overdue example.
+- Consent, visibility, verification, and match-status changes are written to the audit table with actor/action/before/after/time. Organizer-only read-only audit page added.
+- Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass. Verified overdue reminder rendering and that consent/verification produced organizer-visible audit entries.
 
-## Phase 10 — Polish, deploy, documentation: next
-- Accessibility and mobile pass, deploy feasibility, README, architecture diagram, demo script.
+## Phase 10 — Polish, deploy, documentation: in progress
+- Next: README/setup, architecture diagram, demo script, responsive/accessibility checks, deployment feasibility. No production deployment credentials have been configured; do not claim a public deployment unless one is actually available.
