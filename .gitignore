@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+# local prototype database
+/data/*.db
+/data/*.db-*
+
 # production
 /build
 

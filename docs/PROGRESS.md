@@ -13,6 +13,15 @@
 - Removed remote Google font loading after the production build showed this environment cannot reach fonts.googleapis.com; system sans-serif fallback keeps builds reproducible.
 - Checks: `npm run lint` and `npm run build` both pass; all six routes are statically generated.
 
-## Later
-- Phase 2: schema and synthetic seed.
-- Phases 3–10: roles/consent, core features, matching, readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
+## Phase 2 — Data model and seed data: complete
+- Added Drizzle ORM schema for users, teams, projects, milestones, needs, mentors, matches, consents, feedback, reminders, and audit log.
+- Added repeatable synthetic seed script and centralized database read helpers.
+- `npm run db:reset` applies schema and refreshes local sample data; second run verified successfully. Counts verified: 12 projects, 18 mentors, 36 milestones, 2 feedback entries.
+- Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass.
+- Caveat: SQLite is local prototype storage. Serverless deployment will require durable hosted storage, per Phase 0 decisions.
+
+## Phase 3 — Roles, consent, visibility: next
+- Next: visible demo role switcher and explicit prototype-only role-aware visibility/consent UX; no real authentication.
+
+## Phases 4–10 — next
+- Core pages, matching, readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
