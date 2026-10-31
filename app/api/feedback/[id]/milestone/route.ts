@@ -1,0 +1,6 @@
+import {NextResponse} from "next/server";
+import {cookies} from "next/headers";
+import {and,eq} from "drizzle-orm";
+import {db} from "@/src/db";
+import {feedback,milestones,projects} from "@/src/db/schema";
+export async function POST(_request:Request,{params}:{params:Promise<{id:string}>}){if((await cookies()).get("demo_role")?.value!=="team")return NextResponse.json({error:"Switch to the Team demo role to add feedback as a milestone."},{status:403});const {id}=await params;const item=await db.select().from(feedback).where(eq(feedback.id,id)).get();if(!item)return NextResponse.json({error:"Feedback entry not found."},{status:404});const project=await db.select().from(projects).where(and(eq(projects.id,item.projectId),eq(projects.teamId,"team-1"))).get();if(!project)return NextResponse.json({error:"This feedback does not belong to the demo team."},{status:403});const milestoneId=`milestone-${crypto.randomUUID()}`;await db.insert(milestones).values({id:milestoneId,projectId:item.projectId,title:item.nextStep,description:"Created from mentor/organizer feedback.",dueDate:new Date(Date.now()+7*86400000).toISOString().slice(0,10),status:"todo",source:"suggested",progressClaim:"self_reported",verifiedBy:null,verifiedAt:null});return NextResponse.json({id:milestoneId},{status:201});}

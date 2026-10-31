@@ -46,8 +46,13 @@
 - Milestone tracker reads actual records and lets Team mark unfinished work done as self-reported.
 - Checks: `npm run db:reset`, API check-in tests (confirmed `Idea` tier and persisted record), milestone insertion/count test, `npm run lint`, and `npm run build` all pass.
 
-## Phase 7 — Feedback repository: next
-- Next: mentor/organizer structured feedback form and one-click conversion of a next step into a team milestone.
+## Phase 7 — Feedback repository: complete
+- Added a structured mentor/organizer feedback form (strengths, improvements, one next step, 1–5 rating); feedback is persisted.
+- Team can turn a feedback next step into a suggested milestone in one click. Consent is enforced for mentor feedback; organizer can leave feedback for any project.
+- Checks: `npm run lint` and `npm run build` pass. Live API test saved feedback as mentor and converted its next step to a milestone as team; seed reset restored synthetic baseline.
 
-## Phases 8–10 — next
-- Dashboard, reminders/audit, polish/deploy/docs.
+## Phase 8 — Organizer dashboard: next
+- Next: data-driven stage/continuation/acceptance metrics, strict self-reported vs verified counts, and verified outcome action.
+
+## Phases 9–10 — next
+- Reminders/audit, polish/deploy/docs.
