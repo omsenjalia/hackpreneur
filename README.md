@@ -1,117 +1,88 @@
 # HACKPRENEUR
 
-**Don't let your hackathon project die.** HACKPRENEUR helps a team take the next step after demo day: create a project profile, check readiness, track milestones, get structured feedback, and explore transparent suggested matches. Organizers get a view of continuation while self-reported and verified outcomes stay separate.
+A local project-continuation workspace for organizing project profiles, milestones, readiness reviews, mentor records, feedback, and progress after demo day.
 
-> **Prototype with synthetic data.** This is a local demo, not a production service. There is no real sign-in, no email/SMS delivery, and no guaranteed introductions or funding. Demo roles and sample records are fictional.
+## Local workspace
 
-## For the WhyCode4U Hackathon 2026
+The application runs on your machine and stores records in a local SQLite database at `data/hackpreneur.db`. The database starts empty. The application does not preload example projects, placeholder people, or sample activity.
 
-Track 3, Problem 2 · Team Visonaris (leader: Om).
+### Requirements
 
-### What works now
+- Node.js 20.9 or later
+- npm
 
-- Responsive landing page plus Projects, Mentors, Milestones, Dashboard, Directory, Readiness, Matching, and Audit pages.
-- Demo role switcher: Team, Mentor, Organizer.
-- Team-created project profiles with visibility control and explicit consent before mentor profile sharing.
-- Private and unconsented projects are excluded from mentor views and matching. Contact details are not surfaced.
-- Explainable rule-based matching: +3 per exact need/expertise tag, +1 per shared domain, +1 for mentors accepting suggestions. A “Why matched” explanation is shown; suggestions are not promises.
-- Eight-item readiness self-check and rule-based milestone recommendations.
-- Structured mentor/organizer feedback that a team can turn into a milestone.
-- Organizer overview distinguishes self-reported from verified completed milestones. Verification requires a completed milestone.
-- In-app overdue reminder panel labelled “Simulated: no message is sent.” Organizer-only audit history for consent, visibility, match choice, and verification.
-- All seeded project, mentor, team, feedback, and contact-like identities are synthetic. Email examples use `example.com`.
-
-### Assumptions and limitations
-
-- Designed for college hackathons in India; English UI first.
-- Mentors and communities are organizer-managed; there is no open signup.
-- Matching and readiness are simple, visible rules (no AI API).
-- A mentor/organizer click is the prototype's verification step, not third-party proof.
-- A project counts as “continued” when at least one milestone is complete or a verified update occurred within 30 days.
-- Demo role cookies are **not authentication**. API role checks are for a single-user demo only and are not suitable for real users or production deployment.
-- Local SQLite is stored in ignored `data/hackpreneur.db`. This project is intentionally local-only for now. A future public deployment would need a hosted persistent database, production authentication/authorization, and an updated privacy/security review.
-- Reminders are generated in the interface only; nothing is sent. No contact details are shared and no introduction is actually arranged.
-- No real personal information should be entered.
-
-## Run locally
-
-Requirements: Node.js 20.9+ (tested with Node.js 22.22.3) and npm.
+### Start
 
 ```bash
 npm install
-npm run db:reset
+npm run db:push
 npm run dev
 ```
 
-Open <http://localhost:3000>. On first visit the role defaults to Team. Use the selector in the top bar to switch roles. The sample database can be reset at any time with `npm run db:reset`; it is safe to rerun and only restores fictional seed data.
+Open <http://localhost:3000>. Create a project and enter your own information. The project list, directory, milestones, and insights populate from records saved in this database.
 
-Useful commands:
+### Checks
 
 ```bash
 npm test
 npm run lint
 npm run build
-npm run db:push
-npm run db:seed
 ```
 
-Optional database location override: set `DB_FILE_NAME` to a SQLite file path. The local DB is ignored by Git.
+`npm run db:push` synchronizes the local SQLite schema. There is no seed command; no dummy records are generated. If upgrading from an earlier seeded local build, stop the app and run `npm run db:clear -- --confirm`, then `npm run db:push` to remove that old database and initialize an empty one. This permanently deletes every record in the selected local database; back up any records you want to keep.
 
-## Technology choices
+## What is included
 
-- Next.js 16.4.3 App Router, React 19.3.0, TypeScript
-- Tailwind CSS 4.3.3 plus authored responsive CSS
-- Drizzle ORM 0.45.4 + SQLite + better-sqlite3 13.0.3 for local demo storage
-- ESLint 9, Node.js 22.22.3 in the build environment
-- Hosting: local development server only for this prototype. Vercel was researched as a possible future option, but is not configured or part of the current build.
+- Project profiles with team, summary, problem statement, domain, technologies, links, needs, and local visibility settings
+- Readiness assessment with next-step recommendations
+- Milestone tracking, completion status, and workspace review status
+- Mentor and organization profiles that you enter yourself
+- Explainable matching based on exact expertise/need tags, domain overlap, and availability
+- Structured feedback and conversion of a feedback next step into a milestone
+- Workspace insights that count actual saved records
+- Local activity history for profile, visibility, matching, and review changes
+- Responsive layout with keyboard focus states
 
-## How matching works
+## Matching rules
 
-See the public **How matching works** page (`/matching`) and the central implementation in `src/matching/score.ts`.
+The rules are implemented in `src/matching/score.ts` and are also available from the Matching page:
 
-1. No suggestions are computed unless the team granted profile-sharing consent.
-2. Mentors who are not accepting suggested introductions are excluded.
-3. +3 for each exact case-insensitive project need / mentor expertise-tag match.
-4. +1 for a shared project / mentor domain.
-5. +1 when the mentor is accepting suggested introductions.
-6. At least one need-tag or domain overlap is required; availability alone is not enough.
-7. Reasons and the point breakdown are displayed. The system does not promise funding or an introduction.
+1. A project must be enabled for local matching.
+2. A mentor profile must be marked available for matching.
+3. +3 for each exact, case-insensitive project need / mentor expertise match.
+4. +1 for each shared domain.
+5. +1 when the profile is available for matching.
+6. At least one need or domain match is required; availability alone is not enough.
+
+Match suggestions are calculated from the records in this workspace. Saving a match records that choice locally; it does not contact a person or organization.
+
+## Data and privacy
+
+- The SQLite database stays on this machine unless you choose to copy it elsewhere.
+- No accounts, email, SMS, or external introductions are configured.
+- The project visibility and local matching controls determine whether a project participates in local suggestions.
+- Contact details are not requested by the mentor profile form or shown in match results.
+- “Verified” records a review made in this workspace. It is not an external audit or certification.
+- Use real information only when you have the appropriate permission to store it on this machine.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  B[Browser · demo roles] --> N[Next.js App Router]
-  N -->|consent and role-gated demo APIs| D[(SQLite · Drizzle)]
-  N --> M[Explainable matching rules]
-  N --> R[Readiness and milestone rules]
-  N --> O[Organizer outcomes and audit]
-  N -. no outbound messages .-> X[Email / SMS not connected]
-  D --> S[Seeded synthetic records]
+  U[Local user] --> W[Next.js workspace]
+  W --> P[Project and milestone pages]
+  W --> M[Local matching rules]
+  W --> D[(SQLite database)]
+  W --> A[Activity history]
+  D --> R[User-entered records]
 ```
 
-![HACKPRENEUR architecture diagram](docs/architecture.svg)
+![HACKPRENEUR architecture](docs/architecture.svg)
 
-The SVG diagram is also available at [`docs/architecture.svg`](docs/architecture.svg).
+## Project notes
 
-## Privacy and safety
+- Technical choices: [`docs/DECISIONS.md`](docs/DECISIONS.md)
+- Current build status: [`docs/PROGRESS.md`](docs/PROGRESS.md)
+- Walkthrough: [`docs/LOCAL_WORKFLOW.md`](docs/LOCAL_WORKFLOW.md)
 
-- Teams control project visibility and must grant explicit profile-sharing consent before their information can be shown to mentors.
-- Private projects never appear in the mentor listing or matching.
-- Contact details are not included in mentor screens. No real contact data is seeded.
-- Self-reported and verified milestones have distinct labels and separate dashboard counts.
-- Verification is a human demo action, not automatic proof.
-- The matching and reminders pages explain limitations and the absence of guarantees or outbound messages.
-
-## Demo walkthrough
-
-A 3-minute suggested path is in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md). Screenshot checklist is in the same file.
-
-## Decisions and progress
-
-- Research, stack/version findings, and hosting caveats: [`docs/DECISIONS.md`](docs/DECISIONS.md).
-- Phase-by-phase status: [`docs/PROGRESS.md`](docs/PROGRESS.md).
-
-## Future work before real deployment
-
-Use a durable hosted database, real authentication and server-enforced team ownership, production secret management, security/privacy review, user testing, and a real deployment smoke test. Add real messaging only with explicit opt-in and a reliable delivery/audit design. These items are intentionally not simulated as working production functionality here.
+HACKPRENEUR is designed as a local workspace. This repository does not configure cloud deployment or external services.

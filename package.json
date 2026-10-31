@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
-    "db:seed": "tsx scripts/seed.ts",
-    "db:reset": "npm run db:push && npm run db:seed",
+    "db:clear": "node scripts/clear-local-db.mjs",
     "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {

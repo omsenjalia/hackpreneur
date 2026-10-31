@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "HACKPRENEUR — keep the idea alive",
-  description: "A post-hackathon project continuation platform. Prototype with synthetic data.",
+  description: "A project continuation workspace for teams after demo day."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

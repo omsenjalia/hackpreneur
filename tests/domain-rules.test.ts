@@ -4,14 +4,14 @@ import { getReadinessLevel, readinessQuestions } from "../src/readiness/rules";
 import { scoreMatches, type MatchMentor, type MatchProject } from "../src/matching/score";
 
 const project: MatchProject = { id:"p1", domain:"healthcare", stage:"prototype", needs:["Firebase","UI feedback"] };
-const mentor = (changes: Partial<MatchMentor> = {}): MatchMentor => ({ id:"m1", name:"Sample Mentor", org:"Demo Org", type:"mentor", expertiseTags:["firebase"], domains:["healthcare"], acceptingIntros:true, ...changes });
+const mentor = (changes: Partial<MatchMentor> = {}): MatchMentor => ({ id:"m1", name:"QA Mentor", org:"Example Organization", type:"mentor", expertiseTags:["firebase"], domains:["healthcare"], availableForMatching:true, ...changes });
 
 test("matching requires explicit profile-sharing consent", () => {
   assert.deepEqual(scoreMatches(project,[mentor()],false),[]);
 });
 
 test("matching excludes unavailable mentors and mentors without need/domain overlap", () => {
-  assert.deepEqual(scoreMatches(project,[mentor({acceptingIntros:false}),mentor({id:"m2",expertiseTags:["legal"],domains:["education"]})],true),[]);
+  assert.deepEqual(scoreMatches(project,[mentor({availableForMatching:false}),mentor({id:"m2",expertiseTags:["legal"],domains:["education"]})],true),[]);
 });
 
 test("matching score explains exact need, domain, and availability points", () => {

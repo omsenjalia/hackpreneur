@@ -1,3 +1,6 @@
-import type {milestones} from "@/src/db/schema";
-type Milestone=typeof milestones.$inferSelect;
-export function ReminderPanel({milestones}:{milestones:Milestone[]}){const today=new Date().toISOString().slice(0,10);const overdue=milestones.filter(item=>item.status!=="done"&&item.dueDate<today);return <section className="reminders"><h2>⏰ Reminders</h2><p><strong>Simulated: no message is sent.</strong> These in-app reminders use overdue demo milestones.</p>{overdue.length?<ul>{overdue.map(item=><li key={item.id}><strong>{item.title}</strong> was due {item.dueDate}.</li>)}</ul>:<p>No overdue milestones right now. Nice progress!</p>}</section>}
+"use client";
+import {getCurrentDate} from "@/src/utils/time";
+import type {InferSelectModel} from "drizzle-orm";
+import {milestones as milestoneTable} from "@/src/db/schema";
+type Milestone=InferSelectModel<typeof milestoneTable>;
+export function ReminderPanel({milestones}:{milestones:Milestone[]}){const today=getCurrentDate();const overdue=milestones.filter(item=>item.status!=="done"&&item.dueDate<today);return <section className="reminders"><h2>Overdue milestones</h2>{overdue.length?<><p>Review these next steps and update their status when ready.</p><ul>{overdue.map(item=><li key={item.id}><strong>{item.title}</strong> · due {item.dueDate}</li>)}</ul></>:<p>No overdue milestones.</p>}</section>}

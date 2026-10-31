@@ -17,7 +17,7 @@
 /.next/
 /out/
 
-# local prototype database
+# local workspace database
 /data/*.db
 /data/*.db-*
 
