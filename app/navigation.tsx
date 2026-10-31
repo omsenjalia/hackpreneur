@@ -4,10 +4,18 @@ import Link from "next/link";
 import { useState } from "react";
 
 type IconName = "home" | "projects" | "people" | "steps" | "compass" | "chart" | "history";
-const navGroups: { label: string; links: [string, string, IconName][] }[] = [
-  { label: "Workspace", links: [["Overview", "/", "home"], ["Projects", "/projects", "projects"], ["Mentors", "/mentors", "people"]] },
-  { label: "Planning", links: [["Milestones", "/milestones", "steps"], ["Readiness", "/readiness", "compass"]] },
-  { label: "Review", links: [["Directory", "/directory", "people"], ["Matching rules", "/matching", "compass"], ["Insights", "/dashboard", "chart"], ["Activity history", "/audit", "history"]] },
+const primaryLinks: [string, string][] = [["Home", "/"], ["Projects", "/projects"], ["Mentors", "/mentors"], ["Milestones", "/milestones"]];
+const extraLinks: [string, string, IconName][] = [
+  ["Readiness", "/readiness", "compass"],
+  ["Directory", "/directory", "people"],
+  ["Matching rules", "/matching", "steps"],
+  ["Insights", "/dashboard", "chart"],
+  ["Activity history", "/audit", "history"],
+];
+const mobileGroups: { label: string; links: [string, string, IconName][] }[] = [
+  { label: "Workspace", links: [["Overview", "/", "home"], ["Projects", "/projects", "projects"], ["Mentors", "/mentors", "people"], ["Directory", "/directory", "people"]] },
+  { label: "Project planning", links: [["Milestones", "/milestones", "steps"], ["Readiness", "/readiness", "compass"], ["Matching rules", "/matching", "steps"]] },
+  { label: "Review", links: [["Insights", "/dashboard", "chart"], ["Activity history", "/audit", "history"]] },
 ];
 
 function Icon({ name }: { name: IconName }) {
@@ -23,14 +31,14 @@ function Icon({ name }: { name: IconName }) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>;
 }
 
-function Navigation({ current, onNavigate }: { current: string; onNavigate?: () => void }) {
-  return <nav className="nav-groups" aria-label="Main navigation">
-    {navGroups.map((group) => <div className="nav-group" key={group.label}>
-      <p className="nav-group-label">{group.label}</p>
+function MobileNavigation({ current, onNavigate }: { current: string; onNavigate: () => void }) {
+  return <nav className="mobile-nav" aria-label="Main navigation">
+    {mobileGroups.map((group) => <div className="mobile-nav-group" key={group.label}>
+      <p>{group.label}</p>
       {group.links.map(([label, href, icon]) => {
         const active = current === href || (href !== "/" && current.startsWith(`${href}/`));
-        return <Link className="nav-link" key={href} href={href} aria-current={active ? "page" : undefined} onClick={onNavigate}>
-          <Icon name={icon}/><span>{label}</span>
+        return <Link className="mobile-nav-link" key={href} href={href} aria-current={active ? "page" : undefined} onClick={onNavigate}>
+          <Icon name={icon}/><span>{label}</span><span className="mobile-nav-arrow" aria-hidden="true">↗</span>
         </Link>;
       })}
     </div>)}
@@ -39,22 +47,27 @@ function Navigation({ current, onNavigate }: { current: string; onNavigate?: () 
 
 export function Header({ current }: { current: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const moreActive = extraLinks.some(([, href]) => current === href || current.startsWith(`${href}/`));
+  const closeMenu = () => setMenuOpen(false);
   return <>
-    <aside className="sidebar" aria-label="Workspace navigation">
-      <Link className="brand" href="/" aria-label="Hackpreneur overview"><span className="brand-mark" aria-hidden="true"><i/><i/><i/></span><span>HACKPRENEUR</span></Link>
-      <div className="workspace-switcher"><span className="switcher-mark">H</span><span><strong>Founder workspace</strong><small>Local · private</small></span><span className="switcher-chevron" aria-hidden="true">⌄</span></div>
-      <Navigation current={current}/>
-      <div className="sidebar-bottom">
-        <div className="privacy-note"><span className="privacy-indicator"/>Your data stays on this device.</div>
-        <Link className="sidebar-create" href="/projects/new"><span aria-hidden="true">＋</span> Create a project</Link>
+    <header className="topbar">
+      <Link className="brand" href="/" aria-label="Hackpreneur home"><span className="brand-mark" aria-hidden="true"><i/><i/><i/></span><span>HACKPRENEUR</span></Link>
+      <nav className="desktop-nav" aria-label="Main navigation">
+        {primaryLinks.map(([label, href]) => <Link className="nav-link" key={href} href={href} aria-current={current === href || (href !== "/" && current.startsWith(`${href}/`)) ? "page" : undefined}>{label}</Link>)}
+        <details className="nav-more"><summary aria-current={moreActive ? "page" : undefined}>More <span aria-hidden="true">⌄</span></summary><div className="nav-dropdown">{extraLinks.map(([label, href]) => <Link key={href} href={href} aria-current={current === href || current.startsWith(`${href}/`) ? "page" : undefined}>{label}</Link>)}</div></details>
+      </nav>
+      <div className="topbar-actions">
+        <Link className="nav-cta" href="/projects/new">Add your project <span aria-hidden="true">＋</span></Link>
+        <button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>
+          <span/><span/>
+        </button>
       </div>
-    </aside>
-    <header className="mobile-bar">
-      <Link className="brand" href="/" aria-label="Hackpreneur overview"><span className="brand-mark" aria-hidden="true"><i/><i/><i/></span><span>HACKPRENEUR</span></Link>
-      <button className="menu-toggle" type="button" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen(!menuOpen)}>
-        <span/><span/>
-      </button>
     </header>
-    {menuOpen && <div className="mobile-menu" id="mobile-navigation"><Navigation current={current} onNavigate={() => setMenuOpen(false)}/><Link className="sidebar-create" href="/projects/new" onClick={() => setMenuOpen(false)}>＋ Create a project</Link><p className="privacy-note"><span className="privacy-indicator"/>Your data stays on this device.</p></div>}
+    <div className={`mobile-menu${menuOpen ? " is-open" : ""}`} id="mobile-navigation" aria-hidden={!menuOpen}>
+      <div className="mobile-menu-heading"><div><span>HACKPRENEUR</span><small>Local founder workspace</small></div><span className="mobile-menu-spark" aria-hidden="true"/></div>
+      <MobileNavigation current={current} onNavigate={closeMenu}/>
+      <Link className="mobile-create" href="/projects/new" onClick={closeMenu}>＋ Add your project</Link>
+      <p className="mobile-privacy"><span aria-hidden="true"/> Your data stays on this device.</p>
+    </div>
   </>;
 }
