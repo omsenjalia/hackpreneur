@@ -28,8 +28,14 @@
 - Checks: `npm run lint` and `npm run build` pass.
 - Safety note: demo role cookie is not authentication or a production authorization boundary; no actual personal contact details are stored.
 
-## Phase 4 — Core pages: next
-- Next: hydrate project list, mentor directory, project detail and create/edit journey from seeded data. Build usable browsing/filtering and team project form.
+## Phase 4 — Core pages: complete
+- Projects list and detail read from SQLite; team can create a project profile with validation, domain, needs, visibility and optional profile-sharing consent.
+- Project detail shows team, needs, stage/readiness, milestones and feedback. Team project list is scoped to its seeded team; mentor list remains consent and visibility gated.
+- Mentor and community directories show synthetic records and provide search plus type filters.
+- Checks: `npm run lint` and `npm run build` pass. Verified a temporary synthetic project could be created, appeared in team list and detail, and the seed reset restored the database. Mentor directory renders 18 seeded profiles.
 
-## Phases 5–10 — next
-- Matching, readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
+## Phase 5 — Explainable matching: next
+- Next: centralize scoring, show reasons and explain matching rules; guarantee mentors see no project contact details.
+
+## Phases 6–10 — next
+- Readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
