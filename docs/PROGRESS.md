@@ -62,5 +62,11 @@
 - Consent, visibility, verification, and match-status changes are written to the audit table with actor/action/before/after/time. Organizer-only read-only audit page added.
 - Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass. Verified overdue reminder rendering and that consent/verification produced organizer-visible audit entries.
 
-## Phase 10 — Polish, deploy, documentation: in progress
-- Next: README/setup, architecture diagram, demo script, responsive/accessibility checks, deployment feasibility. No production deployment credentials have been configured; do not claim a public deployment unless one is actually available.
+## Phase 10 — Polish, deploy, documentation: partially complete (deployment blocked)
+- Completed project README with assumptions, features, stack, setup commands, matching rules, privacy limitations, Mermaid architecture diagram, and synthetic-data warning.
+- Added exported SVG architecture diagram and 3–4 minute demo walkthrough with screenshot checklist.
+- Added custom project icon instead of leaving the create-next-app Next.js/Vercel logos in the app.
+- Added a custom milestone form, focus-visible styles, labelled controls, responsive CSS breakpoints, and clear prototype/error/status copy.
+- Fresh-database test passed using an empty nested DB path; reset/seed is repeatable. `npm run lint`, `npm run build`, `npm audit --omit=dev --audit-level=moderate` (0 production vulnerabilities), and `git diff --check` pass. All main routes returned HTTP 200 in the live preview.
+- **Not complete:** no production public link. Vercel CLI, deployment credentials, and a durable hosted database are not configured; local SQLite cannot safely serve as durable Vercel storage. The demo story has been exercised with route/API checks, but not repeated three times on a public deployment. Do not present the local live preview as a public deployment.
+- Next required before claiming Phase 10 Done: configure an appropriate durable hosted DB and production auth, deploy with the project owner’s hosting connection, test on a phone/public URL, then rehearse the complete demo three times.

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:push": "drizzle-kit push",
+    "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
     "db:reset": "npm run db:push && npm run db:seed"
   },
