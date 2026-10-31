@@ -1,0 +1,7 @@
+import {NextResponse} from "next/server";
+import {cookies} from "next/headers";
+import {and,eq} from "drizzle-orm";
+import {db} from "@/src/db";
+import {consents,projects} from "@/src/db/schema";
+
+export async function POST(request:Request){const jar=await cookies();if(jar.get("demo_role")?.value!=="team")return NextResponse.json({error:"Team role required"},{status:403});const body=await request.json() as {projectId?:string;field?:string;value?:unknown};if(body.projectId!=="project-1")return NextResponse.json({error:"Only the demo team's sample project can be changed"},{status:403});if(body.field==="visibility"&&["private","public","mentors_only"].includes(String(body.value))){await db.update(projects).set({visibility:String(body.value) as "private"|"public"|"mentors_only"}).where(eq(projects.id,body.projectId));return NextResponse.json({ok:true});}if(body.field==="consent"&&typeof body.value==="boolean"){const existing=await db.select({id:consents.id}).from(consents).where(and(eq(consents.projectId,body.projectId),eq(consents.scope,"share_profile"))).get();if(existing)await db.update(consents).set({granted:body.value,grantedAt:body.value?new Date().toISOString():null,grantedBy:"user-team"}).where(eq(consents.id,existing.id));else await db.insert(consents).values({id:"consent-project-1",projectId:body.projectId,scope:"share_profile",granted:body.value,grantedAt:body.value?new Date().toISOString():null,grantedBy:"user-team"});return NextResponse.json({ok:true});}return NextResponse.json({error:"Invalid privacy setting"},{status:400});}

@@ -20,8 +20,16 @@
 - Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass.
 - Caveat: SQLite is local prototype storage. Serverless deployment will require durable hosted storage, per Phase 0 decisions.
 
-## Phase 3 — Roles, consent, visibility: next
-- Next: visible demo role switcher and explicit prototype-only role-aware visibility/consent UX; no real authentication.
+## Phase 3 — Roles, consent, visibility: complete
+- Added visible Team / Mentor / Organizer demo role selector. The choice is carried in a demo cookie and refreshes the current view.
+- Projects list reads synthetic SQLite records and applies role-based visibility: Team sees its sample project; organizers see all; mentors see only `public`/`mentors_only` projects with granted profile-sharing consent.
+- Team project includes editable visibility and a clear profile-sharing consent checkbox; server route rejects privacy changes for non-team roles. Contact details are not disclosed.
+- Verified via live requests: mentor without demo-team role is rejected from editing (403); team consent updates succeed; consented project becomes visible to mentor after setting `mentors_only`; unconsented/private cases are excluded.
+- Checks: `npm run lint` and `npm run build` pass.
+- Safety note: demo role cookie is not authentication or a production authorization boundary; no actual personal contact details are stored.
 
-## Phases 4–10 — next
-- Core pages, matching, readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
+## Phase 4 — Core pages: next
+- Next: hydrate project list, mentor directory, project detail and create/edit journey from seeded data. Build usable browsing/filtering and team project form.
+
+## Phases 5–10 — next
+- Matching, readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
