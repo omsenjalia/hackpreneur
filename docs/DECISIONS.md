@@ -5,7 +5,7 @@
 | Runtime | Next.js App Router with TypeScript | Server-rendered workspace pages with typed route handlers. |
 | Styling | Tailwind CSS plus a small shared CSS system | Consistent, responsive components and deliberate accessible focus states. |
 | Storage | Local SQLite through Drizzle ORM | Data remains in the local workspace and can be used without a hosted database. |
-| Initial data | Empty database; no seed script or sample profiles | Every displayed record is entered by the workspace user. |
+| Initial data | Empty database by default; optional synthetic seed via `npm run db:seed` | Keeps new workspaces honest and lets teams opt into clearly marked demo records for walkthroughs and tests. |
 | Identity | No account or authentication service | This build is explicitly local-only; the interface does not simulate user roles. |
 | Messaging | Not connected | Match choices and reminders remain local records; no email, SMS, or external contact is sent. |
 | Matching | Deterministic, explainable scoring | Users can inspect the criteria; it does not claim AI-based judgment or guaranteed outcomes. |

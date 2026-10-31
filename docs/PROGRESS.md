@@ -3,7 +3,7 @@
 ## Current implementation
 
 - Responsive project-continuation workspace using Next.js, TypeScript, Tailwind CSS, Drizzle ORM, and local SQLite.
-- Database is designed to start empty; no demo-role selector, seed script, or preloaded people/projects are included.
+- Database starts empty by default. `npm run db:seed` optionally adds repeatable, clearly synthetic demo teams, projects, mentors, milestones, feedback, readiness checks, consents, and explainable matches; it does not clear or overwrite workspace data.
 - Users can create project and mentor profiles, manage milestones, complete readiness reviews, add structured feedback, and review workspace activity.
 - Matching is deterministic and explainable, and only uses profiles saved in the current local database.
 - Matching, reminder, and review actions are local records. No external messages or introductions are sent.
@@ -16,7 +16,7 @@ This repository implements a local single-workspace application. It does not con
 ## Verification
 
 - `npm run db:push` applied to a fresh local database; project, mentor, milestone, and feedback tables contained zero records before browser checks.
-- `npm test`: all four matching/readiness tests passed.
+- `npm test`: matching/readiness and synthetic-seed integration tests passed; the seed test runs twice against an isolated temporary SQLite database and checks idempotency, consent, foreign keys, and preservation of workspace-owned records.
 - `npm run lint`: passed without warnings.
 - `npm run build`: optimized production build and TypeScript checks passed.
 - Browser checks: home, projects, directory, mentors, dashboard, milestones, readiness, matching, and activity returned HTTP 200. Empty states displayed, project and mentor creation worked, no runtime errors were reported, and the 390 px mobile viewport had no horizontal overflow.
