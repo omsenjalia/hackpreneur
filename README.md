@@ -29,7 +29,7 @@ Track 3, Problem 2 · Team Visonaris (leader: Om).
 - A mentor/organizer click is the prototype's verification step, not third-party proof.
 - A project counts as “continued” when at least one milestone is complete or a verified update occurred within 30 days.
 - Demo role cookies are **not authentication**. API role checks are for a single-user demo only and are not suitable for real users or production deployment.
-- Local SQLite is stored in ignored `data/hackpreneur.db`. Serverless filesystems are not durable; a public deployment needs a hosted persistent database, production authentication/authorization, and updated privacy/security review. No public deployment is currently configured.
+- Local SQLite is stored in ignored `data/hackpreneur.db`. This project is intentionally local-only for now. A future public deployment would need a hosted persistent database, production authentication/authorization, and an updated privacy/security review.
 - Reminders are generated in the interface only; nothing is sent. No contact details are shared and no introduction is actually arranged.
 - No real personal information should be entered.
 
@@ -62,7 +62,7 @@ Optional database location override: set `DB_FILE_NAME` to a SQLite file path. T
 - Tailwind CSS 4.3.3 plus authored responsive CSS
 - Drizzle ORM 0.45.4 + SQLite + better-sqlite3 13.0.3 for local demo storage
 - ESLint 9, Node.js 22.22.3 in the build environment
-- Vercel is the tentative hosting target, not yet deployed. Its free Hobby plan has usage limits and is intended for personal/non-commercial use; review current terms and attach durable storage before any public use.
+- Hosting: local development server only for this prototype. Vercel was researched as a possible future option, but is not configured or part of the current build.
 
 ## How matching works
 

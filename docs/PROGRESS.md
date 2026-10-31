@@ -62,11 +62,13 @@
 - Consent, visibility, verification, and match-status changes are written to the audit table with actor/action/before/after/time. Organizer-only read-only audit page added.
 - Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass. Verified overdue reminder rendering and that consent/verification produced organizer-visible audit entries.
 
-## Phase 10 — Polish, deploy, documentation: partially complete (deployment blocked)
-- Completed project README with assumptions, features, stack, setup commands, matching rules, privacy limitations, Mermaid architecture diagram, and synthetic-data warning.
+## Phase 10 — Local prototype polish and documentation: complete for current scope
+- Scope intentionally adjusted to local-only by the user; no cloud deployment, hosted database, or public URL is desired at this stage.
+- Completed README with assumptions, features, stack, setup commands, matching rules, privacy limitations, Mermaid architecture diagram, and synthetic-data warning.
 - Added exported SVG architecture diagram and 3–4 minute demo walkthrough with screenshot checklist.
-- Added custom project icon instead of leaving the create-next-app Next.js/Vercel logos in the app.
-- Added a custom milestone form, focus-visible styles, labelled controls, responsive CSS breakpoints, and clear prototype/error/status copy.
-- Fresh-database test passed using an empty nested DB path; reset/seed is repeatable. `npm run lint`, `npm run build`, `npm audit --omit=dev --audit-level=moderate` (0 production vulnerabilities), and `git diff --check` pass. All main routes returned HTTP 200 in the live preview.
-- **Not complete:** no production public link. Vercel CLI, deployment credentials, and a durable hosted database are not configured; local SQLite cannot safely serve as durable Vercel storage. The demo story has been exercised with route/API checks, but not repeated three times on a public deployment. Do not present the local live preview as a public deployment.
-- Next required before claiming Phase 10 Done: configure an appropriate durable hosted DB and production auth, deploy with the project owner’s hosting connection, test on a phone/public URL, then rehearse the complete demo three times.
+- Added custom project icon, custom milestone form, focus-visible styles, labelled controls, responsive CSS breakpoints, and clear prototype/error/status copy.
+- Fresh-database test passed using an empty nested DB path; reset/seed is repeatable. `npm run lint`, `npm run build`, `npm audit --omit=dev --audit-level=moderate` (0 production vulnerabilities), and `git diff --check` pass. Main routes return HTTP 200 in the local preview.
+- Production authentication, hosted database, cloud deployment, and public URL are explicitly future scope, not blockers for this local prototype.
+- Visual review completed at desktop (1440px) and mobile (390px). Mobile document width equals viewport width (no horizontal page overflow); layout, pastel cards, controls, and footer remain readable. A temporary local Playwright/Chromium check was run outside the repository, so no browser-test packages or generated screenshots were added to the project.
+- End-to-end local browser flow passed: mentor privacy filtering → team consent/visibility → explainable match → structured feedback → convert feedback to milestone → readiness → team self-report → organizer verification → distinct dashboard numbers → audit entry → simulated reminder. No browser runtime errors.
+- Main routes returned HTTP 200 and fresh seed reset restored only fictional data. Phase 10 Done criteria are satisfied for the explicitly local prototype scope; public hosting and production security remain intentionally out of scope.
