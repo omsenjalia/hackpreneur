@@ -1,2 +1,9 @@
+import Link from "next/link";
+import {cookies} from "next/headers";
+import {eq} from "drizzle-orm";
 import {AppFrame,PageHeading,SectionTitle} from "../components";
-export default function Milestones(){return <AppFrame current="/milestones"><main className="shell"><PageHeading eyebrow="Keep the momentum" title="One next step at a time">Track practical progress after demo day. Milestone tracking will be connected to project data in a later phase.</PageHeading><SectionTitle>Your next steps</SectionTitle><div className="placeholder">Milestones are not connected yet. Self-reported progress will be clearly separated from verified outcomes.</div></main></AppFrame>}
+import {db} from "@/src/db";
+import {milestones} from "@/src/db/schema";
+import {MilestoneList} from "./milestone-list";
+export const dynamic="force-dynamic";
+export default async function Milestones(){const role=(await cookies()).get("demo_role")?.value??"team";const rows=await db.select().from(milestones).where(eq(milestones.projectId,"project-1")).all();return <AppFrame current="/milestones"><main className="shell"><PageHeading eyebrow="Keep the momentum" title="One next step at a time">Track practical progress after demo day. Team updates are self-reported until a mentor or organizer verifies them.</PageHeading><p><Link className="button secondary" href="/readiness">Start with a readiness check →</Link></p><SectionTitle>Your next steps · {rows.length}</SectionTitle>{role==="team"?<MilestoneList milestones={rows}/>:<div className="placeholder">Switch to the Team demo role to see its private sample project milestones.</div>}</main></AppFrame>}

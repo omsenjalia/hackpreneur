@@ -1,0 +1,7 @@
+import {NextResponse} from "next/server";
+import {cookies} from "next/headers";
+import {eq} from "drizzle-orm";
+import {db} from "@/src/db";
+import {projects,readinessChecks} from "@/src/db/schema";
+import {getReadinessLevel,readinessQuestions} from "@/src/readiness/rules";
+export async function POST(request:Request){const jar=await cookies();if(jar.get("demo_role")?.value!=="team")return NextResponse.json({error:"Switch to the Team demo role to edit readiness."},{status:403});const body=await request.json() as {answers?:unknown};if(!Array.isArray(body.answers)||body.answers.length!==readinessQuestions.length||!body.answers.every(v=>typeof v==="boolean"))return NextResponse.json({error:"Complete the checklist using yes/no answers."},{status:400});const answers=body.answers as boolean[];const level=getReadinessLevel(answers);const existing=await db.select().from(readinessChecks).where(eq(readinessChecks.projectId,"project-1")).get();const values={answers:JSON.stringify(answers),level,updatedAt:new Date().toISOString()};if(existing)await db.update(readinessChecks).set(values).where(eq(readinessChecks.id,existing.id));else await db.insert(readinessChecks).values({id:"readiness-project-1",projectId:"project-1",...values});await db.update(projects).set({readinessScore:Math.round(answers.filter(Boolean).length/readinessQuestions.length*100)}).where(eq(projects.id,"project-1"));return NextResponse.json({level});}

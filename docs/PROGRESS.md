@@ -40,8 +40,14 @@
 - Added public “How matching works” page. Team can record a demo request or dismiss a match; request records a preference only and sends no message.
 - Checks: `npm run lint` and `npm run build` pass. Confirmed an unconsented project receives no suggestions and a consented project shows the explanation UI.
 
-## Phase 6 — Readiness check and milestone recommender: next
-- Next: team checklist, explainable readiness tier, and actionable suggested milestones that can be accepted into the tracker.
+## Phase 6 — Readiness check and milestone recommender: complete
+- Added eight yes/no readiness questions with a clear self-assessment disclaimer. Scoring: 0–2 Idea, 3–5 Prototype, 6–8 Pilot-ready.
+- Each unchecked answer maps to a concrete suggested milestone. Team can add each recommendation to the milestone tracker; updates persist in SQLite.
+- Milestone tracker reads actual records and lets Team mark unfinished work done as self-reported.
+- Checks: `npm run db:reset`, API check-in tests (confirmed `Idea` tier and persisted record), milestone insertion/count test, `npm run lint`, and `npm run build` all pass.
 
-## Phases 7–10 — next
-- Feedback, dashboard, reminders/audit, polish/deploy/docs.
+## Phase 7 — Feedback repository: next
+- Next: mentor/organizer structured feedback form and one-click conversion of a next step into a team milestone.
+
+## Phases 8–10 — next
+- Dashboard, reminders/audit, polish/deploy/docs.
