@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "HACKPRENEUR — keep the idea alive",
+  description: "A project continuation workspace for teams after demo day."
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en" data-scroll-behavior="smooth"><body>{children}</body></html>;
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<title id="title">HACKPRENEUR local workspace architecture</title>
+<desc id="desc">A local user works in the Next.js interface, which reads and writes user-entered records to a local SQLite database and calculates explainable matching suggestions. No external services are connected.</desc>
+<defs><style>.bg{fill:#f5f7f8}.box{fill:#fff;stroke:#d9e1e5;stroke-width:2;rx:18}.dark{fill:#182635;stroke:#182635}.teal{fill:#e7f3f1;stroke:#b7d9d3}.ink{fill:#182635;font:700 23px Arial,sans-serif}.body{fill:#52636e;font:17px Arial,sans-serif}.inverse{fill:#fff;font:700 23px Arial,sans-serif}.smallinv{fill:#d6e2e8;font:16px Arial,sans-serif}.line{stroke:#0f766e;stroke-width:3;fill:none;marker-end:url(#a)}.muted{stroke:#aab8bf;stroke-width:2.5;stroke-dasharray:8 8;fill:none;marker-end:url(#b)}</style><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#0f766e"/></marker><marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#aab8bf"/></marker></defs>
+<rect class="bg" width="1200" height="680"/>
+<text class="ink" x="56" y="58" font-size="30">HACKPRENEUR · local workspace</text>
+<text class="body" x="56" y="91">A focused project-continuation toolkit · records are entered by the workspace user</text>
+<rect class="box" x="55" y="180" width="230" height="180"/>
+<text class="ink" x="82" y="226">Workspace user</text><text class="body" x="82" y="262">Creates project and</text><text class="body" x="82" y="290">mentor records</text><text class="body" x="82" y="330">Reviews local activity</text>
+<rect class="box dark" x="390" y="145" width="390" height="260"/>
+<text class="inverse" x="424" y="192">Next.js application</text><text class="smallinv" x="424" y="232">Project profiles · milestones</text><text class="smallinv" x="424" y="263">Readiness · feedback · insights</text><text class="smallinv" x="424" y="294">Explainable local matching</text><text class="smallinv" x="424" y="345">Responsive interface and API routes</text>
+<rect class="box teal" x="890" y="180" width="255" height="180"/>
+<text class="ink" x="918" y="226">SQLite</text><text class="body" x="918" y="262">Local database</text><text class="body" x="918" y="292">Starts empty</text><text class="body" x="918" y="330">User-entered records</text>
+<path class="line" d="M285 270H375"/><path class="line" d="M780 270H875"/>
+<rect class="box" x="390" y="485" width="390" height="100"/>
+<text class="ink" x="424" y="527">External services</text><text class="body" x="424" y="555">No outbound messaging</text><text class="body" x="424" y="578">No hosted accounts</text>
+<path class="muted" d="M585 405V475"/>
+<text class="body" x="55" y="640">Local-only scope · no cloud deployment or external authentication configured</text>
+</svg>
