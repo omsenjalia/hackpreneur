@@ -15,11 +15,10 @@ The application runs on your machine and stores records in a local SQLite databa
 
 ```bash
 npm install
-npm run db:push
 npm run dev
 ```
 
-Open <http://localhost:3000>. Create a project and enter your own information. The project list, directory, milestones, and insights populate from records saved in this database.
+The dev and start commands create/synchronize the local database schema before launching, so a fresh database has its tables before any page queries run. You can also run `npm run db:push` manually after schema changes. Open <http://localhost:3000>, then create a project and enter your own information. The project list, directory, milestones, and insights populate from records saved in this database.
 
 ### Checks
 
