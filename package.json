@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run db:push",
     "dev": "next dev",
     "build": "next build",
+    "prestart": "npm run db:push",
     "start": "next start",
     "lint": "eslint",
     "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
