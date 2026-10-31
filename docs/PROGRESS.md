@@ -35,7 +35,7 @@
 - Checks: `npm run lint` and `npm run build` pass. Verified a temporary synthetic project could be created, appeared in team list and detail, and the seed reset restored the database. Mentor directory renders 18 seeded profiles.
 
 ## Phase 5 — Explainable matching: complete
-- Added a single pure scoring module with visible rules: +3 exact need/expertise tag, +1 domain overlap, +1 accepting-introductions; unavailable mentors and unconsented projects are excluded.
+- Added a single pure scoring module with visible rules: +3 exact need/expertise tag, +1 domain overlap, +1 accepting-introductions; unavailable mentors and unconsented projects are excluded. A need-tag or domain overlap is required; availability alone cannot create a suggestion.
 - Project detail pages show up to four suggested matches with score breakdown, evidence-based “Why matched” reasons, and the no-guarantees notice. Contact details are never displayed.
 - Added public “How matching works” page. Team can record a demo request or dismiss a match; request records a preference only and sends no message.
 - Checks: `npm run lint` and `npm run build` pass. Confirmed an unconsented project receives no suggestions and a consented project shows the explanation UI.
@@ -67,7 +67,7 @@
 - Completed README with assumptions, features, stack, setup commands, matching rules, privacy limitations, Mermaid architecture diagram, and synthetic-data warning.
 - Added exported SVG architecture diagram and 3–4 minute demo walkthrough with screenshot checklist.
 - Added custom project icon, custom milestone form, focus-visible styles, labelled controls, responsive CSS breakpoints, and clear prototype/error/status copy.
-- Fresh-database test passed using an empty nested DB path; reset/seed is repeatable. `npm run lint`, `npm run build`, `npm audit --omit=dev --audit-level=moderate` (0 production vulnerabilities), and `git diff --check` pass. Main routes return HTTP 200 in the local preview.
+- Fresh-database test passed using an empty nested DB path; reset/seed is repeatable. `npm test` (4 domain-rule tests), `npm run lint`, `npm run build`, `npm audit --omit=dev --audit-level=moderate` (0 production vulnerabilities), and `git diff --check` pass. Main routes return HTTP 200 in the local preview.
 - Production authentication, hosted database, cloud deployment, and public URL are explicitly future scope, not blockers for this local prototype.
 - Visual review completed at desktop (1440px) and mobile (390px). Mobile document width equals viewport width (no horizontal page overflow); layout, pastel cards, controls, and footer remain readable. A temporary local Playwright/Chromium check was run outside the repository, so no browser-test packages or generated screenshots were added to the project.
 - End-to-end local browser flow passed: mentor privacy filtering → team consent/visibility → explainable match → structured feedback → convert feedback to milestone → readiness → team self-report → organizer verification → distinct dashboard numbers → audit entry → simulated reminder. No browser runtime errors.

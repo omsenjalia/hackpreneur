@@ -48,6 +48,7 @@ Open <http://localhost:3000>. On first visit the role defaults to Team. Use the 
 Useful commands:
 
 ```bash
+npm test
 npm run lint
 npm run build
 npm run db:push
@@ -73,7 +74,8 @@ See the public **How matching works** page (`/matching`) and the central impleme
 3. +3 for each exact case-insensitive project need / mentor expertise-tag match.
 4. +1 for a shared project / mentor domain.
 5. +1 when the mentor is accepting suggested introductions.
-6. Reasons and the point breakdown are displayed. The system does not promise funding or an introduction.
+6. At least one need-tag or domain overlap is required; availability alone is not enough.
+7. Reasons and the point breakdown are displayed. The system does not promise funding or an introduction.
 
 ## Architecture
 

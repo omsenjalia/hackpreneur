@@ -9,7 +9,8 @@
     "lint": "eslint",
     "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
     "db:seed": "tsx scripts/seed.ts",
-    "db:reset": "npm run db:push && npm run db:seed"
+    "db:reset": "npm run db:push && npm run db:seed",
+    "test": "node --import tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "better-sqlite3": "^13.0.3",
