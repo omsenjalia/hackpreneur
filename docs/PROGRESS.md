@@ -34,8 +34,14 @@
 - Mentor and community directories show synthetic records and provide search plus type filters.
 - Checks: `npm run lint` and `npm run build` pass. Verified a temporary synthetic project could be created, appeared in team list and detail, and the seed reset restored the database. Mentor directory renders 18 seeded profiles.
 
-## Phase 5 — Explainable matching: next
-- Next: centralize scoring, show reasons and explain matching rules; guarantee mentors see no project contact details.
+## Phase 5 — Explainable matching: complete
+- Added a single pure scoring module with visible rules: +3 exact need/expertise tag, +1 domain overlap, +1 accepting-introductions; unavailable mentors and unconsented projects are excluded.
+- Project detail pages show up to four suggested matches with score breakdown, evidence-based “Why matched” reasons, and the no-guarantees notice. Contact details are never displayed.
+- Added public “How matching works” page. Team can record a demo request or dismiss a match; request records a preference only and sends no message.
+- Checks: `npm run lint` and `npm run build` pass. Confirmed an unconsented project receives no suggestions and a consented project shows the explanation UI.
 
-## Phases 6–10 — next
-- Readiness, feedback, dashboard, reminders/audit, polish/deploy/docs.
+## Phase 6 — Readiness check and milestone recommender: next
+- Next: team checklist, explainable readiness tier, and actionable suggested milestones that can be accepted into the tracker.
+
+## Phases 7–10 — next
+- Feedback, dashboard, reminders/audit, polish/deploy/docs.
