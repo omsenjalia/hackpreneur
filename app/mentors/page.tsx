@@ -1,0 +1,2 @@
+import {AppFrame,PageHeading,SectionTitle} from "../components";
+export default function Mentors(){return <AppFrame current="/mentors"><main className="shell"><PageHeading eyebrow="People and communities" title="Meet your next sounding board">Browse useful expertise and support. Profiles and filters will be powered by synthetic directory data in a later phase.</PageHeading><SectionTitle>Mentor directory</SectionTitle><div className="placeholder">Mentor profiles are not connected yet. No real people or contact details are shown in this prototype.</div></main></AppFrame>}

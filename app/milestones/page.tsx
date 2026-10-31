@@ -1,0 +1,2 @@
+import {AppFrame,PageHeading,SectionTitle} from "../components";
+export default function Milestones(){return <AppFrame current="/milestones"><main className="shell"><PageHeading eyebrow="Keep the momentum" title="One next step at a time">Track practical progress after demo day. Milestone tracking will be connected to project data in a later phase.</PageHeading><SectionTitle>Your next steps</SectionTitle><div className="placeholder">Milestones are not connected yet. Self-reported progress will be clearly separated from verified outcomes.</div></main></AppFrame>}
