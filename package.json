@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
+    "db:seed": "npm run db:push && node --import tsx scripts/seed-demo.ts",
     "db:clear": "node scripts/clear-local-db.mjs",
     "test": "node --import tsx --test tests/*.test.ts"
   },

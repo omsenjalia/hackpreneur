@@ -4,7 +4,7 @@ A local project-continuation workspace for organizing project profiles, mileston
 
 ## Local workspace
 
-The application runs on your machine and stores records in a local SQLite database at `data/hackpreneur.db`. The database starts empty. The application does not preload example projects, placeholder people, or sample activity.
+The application runs on your machine and stores records in a local SQLite database at `data/hackpreneur.db`. The database starts empty; demo records are opt-in and never loaded automatically. You can add a clearly synthetic dataset for testing with `npm run db:seed`.
 
 ### Requirements
 
@@ -20,6 +20,8 @@ npm run dev
 
 The dev and start commands create/synchronize the local database schema before launching, so a fresh database has its tables before any page queries run. You can also run `npm run db:push` manually after schema changes. Open <http://localhost:3000>, then create a project and enter your own information. The project list, directory, milestones, and insights populate from records saved in this database.
 
+To explore the interface with sample records instead, run `npm run db:seed` before starting the app. This adds 12 synthetic projects, 16 synthetic mentor profiles, milestones, feedback, readiness checks, consent states, explainable matches, and a short sample activity history. All demo records are marked with `DEMO` names and stable `demo-` IDs. The command is safe to rerun and does not overwrite or delete other records. Use a fresh database if you want to keep demo records separate from your own workspace; for example, `DB_FILE_NAME=./data/demo.hackpreneur.db npm run db:seed` creates a separate demo database.
+
 ### Checks
 
 ```bash
@@ -28,7 +30,7 @@ npm run lint
 npm run build
 ```
 
-`npm run db:push` synchronizes the local SQLite schema. There is no seed command; no dummy records are generated. If upgrading from an earlier seeded local build, stop the app and run `npm run db:clear -- --confirm`, then `npm run db:push` to remove that old database and initialize an empty one. This permanently deletes every record in the selected local database; back up any records you want to keep.
+`npm run db:push` synchronizes the local SQLite schema. `npm run db:seed` adds the opt-in synthetic demo dataset without clearing the database. If you want to remove demo records, stop the app and run `npm run db:clear -- --confirm`, then `npm run db:push` to initialize an empty database. This permanently deletes every record in the selected local database; back up any records you want to keep.
 
 ## What is included
 
