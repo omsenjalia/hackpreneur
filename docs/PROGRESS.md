@@ -51,8 +51,14 @@
 - Team can turn a feedback next step into a suggested milestone in one click. Consent is enforced for mentor feedback; organizer can leave feedback for any project.
 - Checks: `npm run lint` and `npm run build` pass. Live API test saved feedback as mentor and converted its next step to a milestone as team; seed reset restored synthetic baseline.
 
-## Phase 8 — Organizer dashboard: next
-- Next: data-driven stage/continuation/acceptance metrics, strict self-reported vs verified counts, and verified outcome action.
+## Phase 8 — Organizer dashboard: complete
+- Added organizer-only data-driven dashboard: project stage counts, continuation definition, milestone completion rate, matches and accepted suggestions, feedback count, latest recorded activity, and stalled indicator.
+- Self-reported completed milestones and verified completed milestones are distinct figures and badges. Verification is a separate mentor/organizer action; it requires a completed milestone and mentor consent when applicable.
+- Verified milestones move from `self_reported` to `verified`; they are not double-counted. Dashboard contains only synthetic data.
+- Checks: `npm run db:reset`, `npm run lint`, and `npm run build` pass. Live test changed a milestone to done, verified it as organizer, confirmed DB claim became `verified`, and confirmed the dashboard rendered both separate counts.
 
-## Phases 9–10 — next
-- Reminders/audit, polish/deploy/docs.
+## Phase 9 — Simulated reminders and audit trail: next
+- Next: generated in-app overdue/stale reminders, visible simulation label, and organizer audit entries for consent, visibility, verification, and match status.
+
+## Phase 10 — Polish, deploy, documentation: next
+- Accessibility and mobile pass, deploy feasibility, README, architecture diagram, demo script.
