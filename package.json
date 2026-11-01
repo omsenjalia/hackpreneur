@@ -11,6 +11,7 @@
     "lint": "eslint",
     "db:push": "node scripts/prepare-db-dir.mjs && drizzle-kit push",
     "db:seed": "npm run db:push && node --import tsx scripts/seed-demo.ts",
+    "db:schema-sql": "node scripts/generate-schema-sql.mjs",
     "db:clear": "node scripts/clear-local-db.mjs",
     "test": "node --import tsx --test tests/*.test.ts"
   },
@@ -20,7 +21,8 @@
     "drizzle-orm": "^0.45.4",
     "next": "16.4.3",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

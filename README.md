@@ -66,6 +66,33 @@ Match suggestions are calculated from the records in this workspace. Saving a ma
 - “Verified” records a review made in this workspace. It is not an external audit or certification.
 - Use real information only when you have the appropriate permission to store it on this machine.
 
+## Deploying
+
+The application is a Next.js server app backed by a SQLite file, so it needs a host that runs Node server code — **Vercel** works. Static-only hosts and Cloudflare Pages/Workers do not: `better-sqlite3` is a native addon and cannot be loaded in the Workers runtime.
+
+On Vercel, leave the build command as the default `npm run build`. There is nothing else to configure, and no environment variables are required.
+
+```
+Framework preset:  Next.js
+Build command:     npm run build
+```
+
+Do **not** use `npm run db:seed && npm run build`. Seeding at build time writes `data/hackpreneur.db` inside the build container, and that directory is not part of the deployment — `data/*.db` is gitignored and is absent from the traced server bundle, so the file is discarded the moment the build finishes.
+
+### How the database works when deployed
+
+A serverless host has a read-only filesystem apart from `/tmp`, and it never runs `predev` / `prestart`, so neither the schema push nor a seeded database reaches the running code. `src/db/index.ts` handles both at import time:
+
+1. It opens `./data/hackpreneur.db` when that path is writable — the local case.
+2. Otherwise it falls back to `hackpreneur.db` in the OS temp directory, and seeds the synthetic demo dataset there so a deployed instance is not an empty workspace.
+3. It applies the compiled DDL in `src/db/schema-sql.ts` (generated from `src/db/schema.ts` by `npm run db:schema-sql`), because `drizzle-kit` is a devDependency and is not present at runtime.
+
+Set `DB_FILE_NAME` to pin an exact path. That is an explicit instruction, so it is used or it fails loudly with the reason — it never silently relocates. `SEED_DEMO_DATA=true` seeds a local database on first boot too.
+
+### The limitation you are accepting
+
+`/tmp` on a serverless host is **per-instance and ephemeral**. Writes succeed, but each cold start and each concurrent instance gets its own copy, and everything is lost when the instance is recycled. A Vercel deployment is therefore a demonstration, not a shared workspace. Real persistence needs a networked database — swapping the driver to libSQL/Turso keeps this codebase working on both Vercel and Cloudflare Pages.
+
 ## Architecture
 
 ```mermaid
@@ -86,4 +113,4 @@ flowchart LR
 - Current build status: [`docs/PROGRESS.md`](docs/PROGRESS.md)
 - Walkthrough: [`docs/LOCAL_WORKFLOW.md`](docs/LOCAL_WORKFLOW.md)
 
-HACKPRENEUR is designed as a local workspace. This repository does not configure cloud deployment or external services.
+HACKPRENEUR is designed as a local workspace. It deploys to Vercel for demonstration, with the ephemeral-storage limitation described above; it configures no external services.
